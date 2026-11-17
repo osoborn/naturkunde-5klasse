@@ -1,0 +1,10 @@
+{
+  "name": "Naturkunde 5. Klasse — Das Blut, der Blutkreislauf & Tabakkonsum",
+  "short_name": "Naturkunde 5.Kl",
+  "description": "Interaktiver Naturkunde-Trainer (Das Blut, Blutkreislauf & Tabakkonsum) für die 5. Klasse der Deutschen Schule Santiago",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#0f172a",
+  "lang": "de"
+}

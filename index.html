@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Naturkunde 5.Kl">
+  <link rel="manifest" href="manifest.json">
+  <title>Naturkunde 5. Klasse — Das Blut, der Blutkreislauf &amp; Tabakkonsum</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="show-es">
+  <header class="app-header">
+    <div class="header-inner">
+      <div class="title-group">
+        <div class="badges-row">
+          <span class="badge-topic">🔬 Naturkunde (NK5) · 5. Klasse</span>
+          <span class="badge-school">🦅 Deutsche Schule Santiago · Abteilung Vitacura</span>
+          <span class="badge-gift-pill" id="header-rank-pill">🐣 Rang 1: Blut-Entdeckerin</span>
+        </div>
+        <h1>Das Blut, der Blutkreislauf &amp; Tabakkonsum</h1>
+        <p class="subtitle">
+          Interaktiver Lern- &amp; Prüfungs-Trainer (Alle 11 Seiten aus deinem Heft · Note 1,0 bis 7,0 + Geschenk-Emojis 🎁)
+          <span class="es-sub" lang="es">· Entrenador interactivo en alemán con subtítulos y tips en español, nota de 1,0 a 7,0 y premios de Emojis</span>
+        </p>
+      </div>
+
+      <div class="header-controls">
+        <button type="button" id="btn-toggle-es" class="btn-lang-toggle" aria-pressed="true">
+          <span class="flag-icon" aria-hidden="true">🇩🇪 / 🇪🇸</span>
+          <span id="lang-toggle-text">Spanisch-Hilfe &amp; Tipps: AN</span>
+        </button>
+
+        <button type="button" id="btn-open-gift-modal" class="btn-gift-header">
+          <span aria-hidden="true">🎁</span>
+          <span>Geschenke: <strong id="header-gifts-count">1 / 16</strong></span>
+        </button>
+
+        <div class="score-bar" aria-live="polite" id="global-score-summary">
+          <div class="stat-pill stat-correct">
+            <span class="stat-label">Gelöst <span class="es-inline" lang="es">(Correctas)</span></span>
+            <strong id="global-correct-count">0</strong>
+          </div>
+          <div class="stat-pill stat-streak">
+            <span class="stat-label">Serie 🔥</span>
+            <strong id="global-streak-count">0</strong>
+          </div>
+          <div class="stat-pill stat-progress">
+            <span class="stat-label">Punkte ⭐</span>
+            <strong id="global-points-count">0</strong>
+          </div>
+          <div class="stat-pill stat-grade">
+            <span class="stat-label">Note 🇨🇱</span>
+            <strong id="global-live-grade">—</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Navegación de los 6 Módulos (Modern Web Guidance `tabs`) -->
+    <nav class="tabs-nav scroller" focusgroup="tablist nomemory" aria-label="Lernmodule Naturkunde 5. Klasse">
+      <button type="button" id="tabbtn-heft" class="tab-btn active" data-tab="tab-heft" aria-selected="true" focusgroupstart>
+        <span class="tab-icon" aria-hidden="true">📖</span>
+        <span class="tab-text">
+          <strong>1. Heft, Klappkarten &amp; Vokabeln</strong>
+          <small class="es-sub" lang="es">Resumen visual, tarjetas plegables y tabla</small>
+        </span>
+      </button>
+      <button type="button" id="tabbtn-blut" class="tab-btn" data-tab="tab-blut" aria-selected="false">
+        <span class="tab-icon" aria-hidden="true">🩸</span>
+        <span class="tab-text">
+          <strong>2. Das Blut &amp; Comic (S. 1–2)</strong>
+          <small class="es-sub" lang="es">Esquema de la sangre y pintar cómic</small>
+        </span>
+      </button>
+      <button type="button" id="tabbtn-kreislauf" class="tab-btn" data-tab="tab-kreislauf" aria-selected="false">
+        <span class="tab-icon" aria-hidden="true">🫀</span>
+        <span class="tab-text">
+          <strong>3. Blutkreislauf-Labor (S. 3–4)</strong>
+          <small class="es-sub" lang="es">Esquema 1–5, vasos e intercambio gaseoso</small>
+        </span>
+      </button>
+      <button type="button" id="tabbtn-tabak" class="tab-btn" data-tab="tab-tabak" aria-selected="false">
+        <span class="tab-icon" aria-hidden="true">🚭</span>
+        <span class="tab-text">
+          <strong>4. Tabak &amp; 5-Fehler (S. 7–11)</strong>
+          <small class="es-sub" lang="es">Fumador (S. 10) y cazar los 5 errores (S. 11)</small>
+        </span>
+      </button>
+      <button type="button" id="tabbtn-arena" class="tab-btn tab-btn-arena" data-tab="tab-arena" aria-selected="false">
+        <span class="tab-icon" aria-hidden="true">🎮</span>
+        <span class="tab-text">
+          <strong>5. Prüfungs-Arena (Note 1–7)</strong>
+          <small class="es-sub" lang="es">64 preguntas + Nota 1,0 a 7,0 y Emojis</small>
+        </span>
+      </button>
+      <button type="button" id="tabbtn-geschenke" class="tab-btn tab-btn-gifts" data-tab="tab-geschenke" aria-selected="false">
+        <span class="tab-icon" aria-hidden="true">🎁</span>
+        <span class="tab-text">
+          <strong>6. Geschenk-Emojis &amp; Noten</strong>
+          <small class="es-sub" lang="es">Tus premios desbloqueados y escala 1–7</small>
+        </span>
+      </button>
+    </nav>
+  </header>
+
+  <main class="main-container">
+    <!-- ===================================================================
+         TAB 1: HEFT-SPICKZETTEL, KLAPPKARTEN (S. 5–6) & VOKABEL-TRAINER
+    ==================================================================== -->
+    <section id="tab-heft" class="tab-panel active" role="tabpanel" aria-labelledby="tabbtn-heft">
+      <div class="panel-inner">
+        <div class="section-intro-bar">
+          <div>
+            <h2>📖 Dein komplettes Naturkunde-Heft (Seiten 1 bis 11)</h2>
+            <p class="es-sub" lang="es">Todo el contenido en alemán explicado paso a paso con pequeños subtítulos y tips en español abajo para que sea súper fácil de entender.</p>
+          </div>
+          <div class="subview-pills" role="group" aria-label="Ansicht im Heft-Modul wählen">
+            <button type="button" class="pill-btn active" data-heft-view="posters">🎨 1. Visuelle Lernkarten (S. 1–10)</button>
+            <button type="button" class="pill-btn" data-heft-view="klappkarten">🗂️ 2. Klappkarten &amp; Abkürzungen (S. 5–6)</button>
+            <button type="button" class="pill-btn" data-heft-view="vocab">✍️ 3. Vokabel-Trainer (28 Begriffe)</button>
+          </div>
+        </div>
+
+        <!-- SUBVIEW 1A: VISUELLE LERNKARTEN -->
+        <div id="heft-view-posters" class="posters-grid">
+          <!-- Karte 1: Das Blut (Seite 1 & 2) -->
+          <article class="poster-card">
+            <div class="poster-header">
+              <span class="poster-page-badge">Seite 1 &amp; 2</span>
+              <h3>🩸 1. Das Blut — „Ein flüssiges Gewebe“</h3>
+              <span class="es-sub" lang="es">La sangre: un «tejido líquido» que se forma en la médula ósea de los huesos largos</span>
+            </div>
+            <div class="poster-body">
+              <div class="highlight-rule-box">
+                <p><strong>🦴 Wo entsteht das Blut?</strong> Das Blut bildet sich im <strong>Knochenmark der langen Knochen</strong> (rotes Knochenmark → Stammzelle).</p>
+                <p class="es-sub" lang="es">💡 Tipp: «Knochenmark der langen Knochen» = médula ósea de los huesos largos.</p>
+              </div>
+
+              <div class="concept-split mt-sm">
+                <div class="concept-box box-yellow">
+                  <h4>💧 1. Flüssiger Teil: <strong>das Blutplasma</strong> (gelb)</h4>
+                  <ul class="clean-list">
+                    <li>
+                      <strong>Wichtigste Funktion:</strong> Der <strong>Transport von verschiedenen Stoffen</strong> (z. B. Nährstoffe).
+                      <span class="es-sub" lang="es">Función principal: transportar diversas sustancias por el cuerpo.</span>
+                    </li>
+                    <li>
+                      <strong>Wer lebt darin?</strong> In ihm leben (schwimmen) die <strong>Blutkörperchen</strong> und die <strong>Blutplättchen</strong>.
+                      <span class="es-sub" lang="es">En él viven los glóbulos sanguíneos y las plaquetas (en el cómic es de color amarillo).</span>
+                    </li>
+                  </ul>
+                </div>
+
+                <div class="concept-box box-red">
+                  <h4>🧱 2. Fester Teil (3 Bestandteile)</h4>
+                  <ul class="clean-list">
+                    <li>
+                      🔴 <strong>Rote Blutkörperchen</strong> <em>(Erythrozyten / glóbulos rojos)</em>:<br>
+                      Transport von <strong>Sauerstoff (O₂)</strong> und <strong>Kohlenstoffdioxid (CO₂)</strong>. Im Comic: <strong>rot („R“)</strong>.
+                      <span class="es-sub" lang="es">Transportan el oxígeno hacia las células y el dióxido de carbono de vuelta.</span>
+                    </li>
+                    <li>
+                      🛡️ <strong>Weiße Blutkörperchen</strong> <em>(Leukozyten / glóbulos blancos)</em>:<br>
+                      <strong>Kämpfen gegen Viren und Bakterien!</strong> Im Comic: Ritter mit Schwert &amp; <strong>blauem Schild („B“)</strong>.
+                      <span class="es-sub" lang="es">Son los policías/soldados del cuerpo: luchan contra virus y bacterias.</span>
+                    </li>
+                    <li>
+                      🩹 <strong>Blutplättchen</strong> <em>(Thrombozyten / plaquetas)</em>:<br>
+                      <strong>Reparieren zerstörte Blutgefäße</strong> und verhindern, dass das Blut weiter fließt → <strong>Also, es gerinnt</strong> <em>(se coagula)</em>. Im Comic: Bauarbeiter in <strong>braun („P“)</strong>.
+                      <span class="es-sub" lang="es">Reparan los vasos sanguíneos rotos haciendo que la sangre se coagule (gerinnt).</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Karte 2: Das Herz & die 3 Blutgefäße (Seite 3) -->
+          <article class="poster-card">
+            <div class="poster-header">
+              <span class="poster-page-badge">Seite 3 · NK5 WP 32</span>
+              <h3>🫀 2. Das Herz &amp; die 3 Blutgefäße (Röhren)</h3>
+              <span class="es-sub" lang="es">El corazón como músculo incansable y los 3 tipos de vasos sanguíneos (Arterien, Venen, Kapillaren)</span>
+            </div>
+            <div class="poster-body">
+              <div class="highlight-rule-box">
+                <p><strong>💓 Das Herz:</strong> Ein Muskel, der das ganze Leben lang arbeitet, <strong>ohne eine Pause zu machen</strong>! Es pumpt das Blut durch den Körper. <strong>Kinder haben 3 oder 4 Liter Blut. Erwachsene haben 5 Liter.</strong></p>
+                <p class="es-sub" lang="es">💡 Tipp: Niños = 3 o 4 litros de sangre · Adultos = 5 litros de sangre.</p>
+              </div>
+
+              <div class="vessels-cards-row mt-sm">
+                <div class="vessel-mini-card vessel-art">
+                  <div class="vessel-sym" aria-hidden="true">♡ ──► 🧍</div>
+                  <h4>1. die Arterien</h4>
+                  <p>Transportieren Blut <strong>VOM Herzen ZU den Körperzellen</strong> (oder zur Lunge).</p>
+                  <small class="es-sub" lang="es">💡 Regla: «Arterie» SIEMPRE sale DEL corazón (weg vom Herzen).</small>
+                </div>
+                <div class="vessel-mini-card vessel-ven">
+                  <div class="vessel-sym" aria-hidden="true">🧍 ──► ♡</div>
+                  <h4>2. die Venen</h4>
+                  <p>Transportieren das Blut <strong>VON den Organen (Zellen) ZUM Herzen</strong> zurück.</p>
+                  <small class="es-sub" lang="es">💡 Regla: «Vene» SIEMPRE regresa AL corazón (hin zum Herzen).</small>
+                </div>
+                <div class="vessel-mini-card vessel-kap">
+                  <div class="vessel-sym" aria-hidden="true">Arterien ──► 🕸️ ──► Venen</div>
+                  <h4>3. die Kapillaren</h4>
+                  <p>Sind <strong>mikroskopisch klein</strong>. Sie <strong>verbinden die Arterien und Venen</strong>. Hier findet der <strong>Gasaustausch</strong> statt!</p>
+                  <small class="es-sub" lang="es">💡 Conectan arterias y venas; ahí ocurre el intercambio de gases.</small>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Karte 3: Der doppelte Blutkreislauf (Seite 3, 4, 5 & 6) -->
+          <article class="poster-card poster-wide">
+            <div class="poster-header">
+              <span class="poster-page-badge">Seite 3, 4, 5 &amp; 6</span>
+              <h3>🔄 3. Körperkreislauf &amp; Lungenkreislauf (So fließt das Blut!)</h3>
+              <span class="es-sub" lang="es">El recorrido exacto de la sangre rica en oxígeno (sauerstoffreich = rojo) y pobre en oxígeno (sauerstoffarm = azul)</span>
+            </div>
+            <div class="poster-body">
+              <div class="kreislauf-steps-grid">
+                <div class="kreislauf-step-box step-koerper">
+                  <h4>🔴 1. Der Körperkreislauf <span class="es-inline" lang="es">(Circulación corporal)</span></h4>
+                  <ol class="step-ordered-list">
+                    <li>
+                      <strong>Start im linken Herzen (1):</strong> Die <strong>linke Herzhälfte (linke Herzkammer *)</strong> pumpt das <strong>sauerstoffreiche Blut</strong> <em>(hat viel Sauerstoff)</em> über die <strong>Körperarterie</strong> in den Körperkreislauf zu den Körperzellen.
+                      <span class="es-sub" lang="es">El ventrículo izquierdo bombea sangre rica en oxígeno por la arteria corporal hacia las células.</span>
+                    </li>
+                    <li>
+                      <strong>Zellatmung in den Zellen (1a):</strong> Die <strong>Körperzellen (Muskelzellen)</strong> nehmen den <strong>Sauerstoff (S)</strong> und <strong>Nährstoffe (N)</strong> auf (für <strong>Energie</strong>) und geben das <strong>Kohlenstoffdioxid (Ko)</strong> von der <strong>Zellatmung</strong> ab.
+                      <span class="es-sub" lang="es">En la respiración celular, las células toman O₂ y nutrientes y entregan CO₂ a la sangre.</span>
+                    </li>
+                    <li>
+                      <strong>Rückweg zum Herzen (1b):</strong> Das <strong>sauerstoffarme Blut</strong> <em>(wenig Sauerstoff, mit viel Kohlenstoffdioxid)</em> fließt über die <strong>Körpervene</strong> zur <strong>rechten Herzhälfte (rechten Herzkammer)</strong> zurück.
+                      <span class="es-sub" lang="es">La sangre pobre en oxígeno vuelve por la vena corporal hacia la mitad derecha del corazón.</span>
+                    </li>
+                  </ol>
+                </div>
+
+                <div class="kreislauf-step-box step-lunge">
+                  <h4>🔵 2. Der Lungenkreislauf <span class="es-inline" lang="es">(Circulación pulmonar)</span></h4>
+                  <ol class="step-ordered-list">
+                    <li>
+                      <strong>Vom rechten Herzen zur Lunge (2a):</strong> Die <strong>rechte Herzhälfte (rechte Herzkammer)</strong> pumpt das <strong>sauerstoffarme Blut</strong> über die <strong>Lungenarterie</strong> zu den <strong>Lungenbläschen</strong> der Lungen.
+                      <span class="es-sub" lang="es">La mitad derecha bombea la sangre sin O₂ por la arteria pulmonar hacia los alvéolos.</span>
+                    </li>
+                    <li>
+                      <strong>Gasaustausch in der Lunge (2b):</strong> In den <strong>Lungenbläschen</strong> gibt das Blut <strong>Kohlenstoffdioxid ab</strong> (zum Ausatmen) und <strong>nimmt frischen Sauerstoff auf</strong> (vom Einatmen).
+                      <span class="es-sub" lang="es">En los alvéolos ocurre el Gasaustausch: la sangre suelta el CO₂ y se carga de O₂.</span>
+                    </li>
+                    <li>
+                      <strong>Zurück ins linke Herz (2c):</strong> Das <strong>Blut mit viel Sauerstoff (sauerstoffreiches Blut)</strong> fließt über die <strong>Lungenvene</strong> in die <strong>linke Herzhälfte (linke Herzkammer)</strong>!
+                      <span class="es-sub" lang="es">La sangre oxigenada regresa por la vena pulmonar al lado izquierdo del corazón.</span>
+                    </li>
+                  </ol>
+                </div>
+              </div>
+
+              <div class="golden-trap-alert mt-sm">
+                <strong>⚠️ Achtung Prüfungsfalle (Trampa de prueba):</strong>
+                In der <strong>Lungenarterie</strong> fließt <strong>sauerstoffarmes (blaues) Blut</strong>, weil sie <em>vom rechten Herzen zur Lunge</em> führt! Und in der <strong>Lungenvene</strong> fließt <strong>sauerstoffreiches (rotes) Blut</strong>, weil sie <em>von der Lunge zum linken Herzen</em> führt!
+                <span class="es-sub" lang="es">💡 No te guíes solo por el color: Arteria = sale del corazón; Vena = entra al corazón.</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- Karte 4: Tabakkonsum — Nikotin, Teer & Kohlenmonoxid (Seite 7 & 8) -->
+          <article class="poster-card">
+            <div class="poster-header">
+              <span class="poster-page-badge">Seite 7 &amp; 8</span>
+              <h3>🚬 4. Tabakkonsum: Die 3 Schadstoffe &amp; Folgen</h3>
+              <span class="es-sub" lang="es">Al quemar hojas de tabaco (Tabakblätter) el humo lleva sustancias tóxicas hasta los pulmones</span>
+            </div>
+            <div class="poster-body">
+              <div class="poisons-list">
+                <div class="poison-item poison-teer">
+                  <h4>🟤 1. Der Teer <span class="es-inline" lang="es">(Alquitrán · Farbe auf S. 10: BRAUN)</span></h4>
+                  <p><strong>Im Alltag:</strong> Wird als <strong>Bindemittel im Straßenbau</strong> (Asphalt) benutzt; wird <strong>klebrig</strong>, wenn es heiß ist (im Sommer).</p>
+                  <p><strong>Im Körper:</strong> Bleibt an den <strong>Flimmerhärchen</strong> <em>(pelillos)</em> der Atemwege kleben → sie können sich <strong>nicht richtig bewegen</strong> (schlechter arbeiten) und die Atemwege nicht sauber machen. <strong>Das Schlimmste:</strong> Er klebt in den <strong>Lungenbläschen</strong> → der <strong>Gasaustausch wird schwieriger</strong>: Es kommt <strong>nicht genug (weniger) Sauerstoff ins Blut</strong> und das <strong>Kohlenstoffdioxid bleibt im Blut</strong>!</p>
+                  <span class="es-sub" lang="es">💡 Tipp: Teer = pegajoso (klebrig) → pega los Flimmerhärchen y los Lungenbläschen.</span>
+                </div>
+
+                <div class="poison-item poison-co">
+                  <h4>⚪ 2. Das Kohlenstoffmonoxid / Kohlenmonoxid <span class="es-inline" lang="es">(Monóxido de carbono · Farbe auf S. 10: GRAU)</span></h4>
+                  <p><strong>Im Alltag:</strong> Entsteht aus der <strong>Verbrennung von Kohle, Gas oder Benzin</strong> (Auto-Auspuff).</p>
+                  <p><strong>Im Körper:</strong> Gelangt durch die Lungenbläschen ins Blut. Es ist <strong>schneller als Sauerstoff</strong> (Schild: <em>„NO ADELANTAR“</em>)! So wird <strong>weniger Sauerstoff zu den Zellen transportiert</strong>.</p>
+                  <span class="es-sub" lang="es">💡 Tipp: Kohlenstoffmonoxid = gas que «adelanta» al oxígeno en la sangre («schneller als Sauerstoff»).</span>
+                </div>
+
+                <div class="poison-item poison-nikotin">
+                  <h4>🟣 3. Das Nikotin <span class="es-inline" lang="es">(Nicotina · Farbe auf S. 10: LILA)</span></h4>
+                  <p><strong>Im Alltag:</strong> Befindet sich in einigen <strong>Insektiziden</strong> <em>(tötet Insekten)</em>.</p>
+                  <p><strong>Im Körper:</strong> 1. Zuerst <strong>verengen sich die Blutgefäße</strong> (werden enger/dünner, <em>nicht breiter!</em>). 2. Danach werden sie <strong>hart und steif</strong>. 3. Kein Platz mehr für Blut → Körperteil (Zeh, Fuß, Bein) kann absterben = <strong>Raucherbein</strong>! 4. <strong>Das Herz klopft schneller.</strong> Außerdem ist Nikotin ein <strong>Gift</strong>: Es zerstört <strong>Nervenzellen im Gehirn</strong>, <strong>macht süchtig</strong> und macht die Nerven krank.</p>
+                  <span class="es-sub" lang="es">💡 Tipp: Nikotin = veneno de insecticidas → estrecha vasos sanguíneos (Raucherbein) y causa adicción (süchtig).</span>
+                </div>
+              </div>
+
+              <div class="folgen-box mt-sm">
+                <h4>📋 Alle 8 gesundheitlichen Folgen des Tabakkonsums (Seite 8):</h4>
+                <div class="chips-row">
+                  <span class="info-chip">1. Husten <em>(tos)</em></span>
+                  <span class="info-chip">2. Lungenkrankheiten</span>
+                  <span class="info-chip">3. Krebs <em>(cáncer)</em></span>
+                  <span class="info-chip">4. Finger &amp; Zähne werden gelb</span>
+                  <span class="info-chip">5. Konzentrationsprobleme <em>(wegen weniger O₂)</em></span>
+                  <span class="info-chip">6. Man wird schneller müde</span>
+                  <span class="info-chip">7. Man riecht schlecht</span>
+                  <span class="info-chip">8. Organe bekommen zu wenig Blut &amp; können absterben</span>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Karte 5: Passivrauchen & 5-Fehler-Warnung (Seite 9, 10 & 11) -->
+          <article class="poster-card">
+            <div class="poster-header">
+              <span class="poster-page-badge">Seite 9, 10 &amp; 11</span>
+              <h3>🛡️ 5. Passivrauchen &amp; die 5 Schulbuch-Fehler</h3>
+              <span class="es-sub" lang="es">Por qué el humo ajeno es tan peligroso para los niños y las 5 correcciones clave de la página 11</span>
+            </div>
+            <div class="poster-body">
+              <div class="concept-box box-purple">
+                <h4>🚭 Was ist „Passivrauchen“? (Seite 9)</h4>
+                <p>Wenn du den <strong>Rauch einer angezündeten Zigarette von anderen einatmest</strong>, heißt das <strong>Passivrauchen</strong>. Es ist <strong>fast so schädlich wie das aktive Rauchen</strong>!</p>
+                <p><strong>👧 Warum ist es für KINDER besonders gefährlich? (2 Gründe!):</strong></p>
+                <ol class="step-ordered-list">
+                  <li>Weil Kinder <strong>schneller als Erwachsene atmen</strong> (also kommt <strong>mehr Rauch</strong> rein).</li>
+                  <li>Weil ihr Körper die <strong>Giftstoffe schlechter abbauen</strong> <em>(descomponer-eliminar)</em> kann.</li>
+                </ol>
+                <p><strong>Folgen bei Kindern:</strong> Augenschmerzen, starker Husten, Kopfschmerzen, schneller müde, <strong>Abwehrkräfte (defensas) werden schwächer</strong> → Kinder werden <strong>oft krank</strong>.</p>
+                <p><strong>🚗 Achtung im Raucherauto:</strong> Wenn die Fenster zu sind, nimmt ein Kind so viele Schadstoffe ein, <strong>als hätte es selbst eine Zigarette geraucht</strong>!</p>
+                <span class="es-sub" lang="es">💡 Memoriza los 2 motivos de los niños: 1) «schneller atmen» y 2) «Giftstoffe schlechter abbauen».</span>
+              </div>
+
+              <div class="concept-box box-green mt-sm">
+                <h4>🕵️‍♀️ Die 6 Sätze von Seite 11 auf einen Blick (5 Fehler + 1 Richtig!):</h4>
+                <ul class="clean-list compact-list">
+                  <li><strong>1.</strong> <s>Wasser</s> → Wenn du atmest, kommt <strong>Luft (Sauerstoff)</strong> in die Lunge.</li>
+                  <li><strong>2.</strong> <s>Lungenbläschen an Zellen</s> → Die Lungenbläschen geben O₂ <strong>ans Blut</strong> ab / Die <strong>Blutgefäße (das Blut)</strong> geben O₂ an die Zellen ab.</li>
+                  <li><strong>3.</strong> ✅ <strong>RICHTIG:</strong> <em>„Das Blut transportiert den Sauerstoff zu den Zellen.“</em> (Kein Fehler!)</li>
+                  <li><strong>4.</strong> <s>besser arbeiten</s> → Der Teer klebt an den <strong>Flimmerhärchen</strong>. So können sie <strong>schlechter (nicht richtig) arbeiten</strong>.</li>
+                  <li><strong>5.</strong> <s>breiter</s> → Das Nikotin macht die Blutgefäße <strong>enger (dünner / schmaler)</strong>.</li>
+                  <li><strong>6.</strong> <s>mehr Sauerstoff</s> → In die Blutgefäße kommt <strong>weniger (nicht genug) Sauerstoff</strong>.</li>
+                </ul>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <!-- SUBVIEW 1B: KLAPPKARTEN & ABKÜRZUNGEN (SEITE 5 & 6) -->
+        <div id="heft-view-klappkarten" hidden>
+          <div class="klapp-intro-card">
+            <div>
+              <h3>🗂️ Deine 3 Klappkarten &amp; Abkürzungen aus dem Heft (Seite 5 &amp; 6)</h3>
+              <p>In deinem karierten Heft hast du 3 Klappkarten gebastelt und am Rand die Abkürzungen notiert. Wähle für jede Zeile den richtigen vollständigen Satz aus!</p>
+              <p class="es-sub" lang="es">Completa las 3 tarjetas plegables de las páginas 5 y 6 de tu cuaderno y obtén tu Nota de 1,0 a 7,0 con Emojis de regalo.</p>
+            </div>
+            <div class="actions-right">
+              <button type="button" id="btn-kk-evaluate" class="btn-primary">📝 Klappkarten benoten (Note 1–7 🎁)</button>
+              <button type="button" id="btn-kk-reset" class="btn-secondary">🔄 Zurücksetzen</button>
+            </div>
+          </div>
+
+          <!-- Abkürzungs-Leiste -->
+          <div class="abbr-strip" aria-label="Abkürzungen aus dem Heft">
+            <strong>📌 Heft-Abkürzungen (S. 5):</strong>
+            <div id="abbr-chips-container" class="chips-row mt-xs"></div>
+          </div>
+
+          <div id="kk-grade-banner" class="grade-certificate-card" hidden></div>
+
+          <div id="klappkarten-container" class="klappkarten-grid"></div>
+        </div>
+
+        <!-- SUBVIEW 1C: VOKABEL-TRAINER (28 BEGRIFFE) -->
+        <div id="heft-view-vocab" hidden>
+          <div class="controls-card">
+            <div class="controls-grid">
+              <div class="form-group">
+                <label for="vocab-block-select">Themenblock <span class="es-inline" lang="es">(Bloque de estudio)</span></label>
+                <select id="vocab-block-select">
+                  <option value="all" selected>Alle 28 Naturkunde-Begriffe (Todos los conceptos)</option>
+                  <option value="1. Das Blut (Seite 1–2)">1. Das Blut (Flüssiges Gewebe, Plasma, Zellen, Gerinnung)</option>
+                  <option value="2. Herz & Blutgefäße (Seite 3–6)">2. Herz &amp; Blutgefäße (Arterien, Venen, Kapillaren)</option>
+                  <option value="3. Kreislauf & Gasaustausch (Seite 3–6)">3. Kreislauf &amp; Gasaustausch (Lungen- &amp; Körperkreislauf)</option>
+                  <option value="4. Tabakkonsum & Passivrauchen (Seite 7–11)">4. Tabakkonsum &amp; Passivrauchen (Nikotin, Teer, CO)</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="vocab-mode-select">Übungsmodus <span class="es-inline" lang="es">(Qué columna completar)</span></label>
+                <select id="vocab-mode-select">
+                  <option value="ask_de" selected>🇩🇪 Deutschen Begriff schreiben (Escribir en alemán)</option>
+                  <option value="ask_es">🇪🇸 Spanische Bedeutung schreiben (Escribir en español)</option>
+                  <option value="study">👀 Lern-Ansicht: Alle Lösungen zeigen (Modo estudio)</option>
+                </select>
+              </div>
+
+              <div class="form-actions">
+                <button type="button" id="btn-vocab-check" class="btn-primary">✓ Prüfen &amp; Note 1–7 🎁</button>
+                <button type="button" id="btn-vocab-retry" class="btn-warning" hidden>🔁 Nur Fehler üben</button>
+                <button type="button" id="btn-vocab-reset" class="btn-secondary">🔄 Neu starten</button>
+              </div>
+            </div>
+
+            <div class="umlaut-bar" aria-label="Deutsche Sonderzeichen einfügen">
+              <span>Schnell-Tasten für Deutsch:</span>
+              <button type="button" class="umlaut-btn" data-char="ä">ä</button>
+              <button type="button" class="umlaut-btn" data-char="ö">ö</button>
+              <button type="button" class="umlaut-btn" data-char="ü">ü</button>
+              <button type="button" class="umlaut-btn" data-char="Ä">Ä</button>
+              <button type="button" class="umlaut-btn" data-char="Ö">Ö</button>
+              <button type="button" class="umlaut-btn" data-char="Ü">Ü</button>
+              <button type="button" class="umlaut-btn" data-char="ß">ß</button>
+            </div>
+          </div>
+
+          <div id="vocab-grade-banner" class="grade-certificate-card" hidden></div>
+
+          <div class="table-wrapper">
+            <table class="vocab-table">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>🇩🇪 Begriff auf Deutsch</th>
+                  <th>🇪🇸 Bedeutung &amp; Spanisch-Tipp</th>
+                  <th>🔬 Erklärung aus dem Heft (auf Deutsch)</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="vocab-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================================
+         TAB 2: DAS BLUT — SCHEMA (S. 1) & COMIC-FIGUREN (S. 2)
+    ==================================================================== -->
+    <section id="tab-blut" class="tab-panel" role="tabpanel" aria-labelledby="tabbtn-blut" hidden>
+      <div class="panel-inner">
+        <div class="section-intro-bar">
+          <div>
+            <h2>🩸 Das Blut: Schema (Seite 1) &amp; Comic-Figuren anmalen (Seite 2)</h2>
+            <p class="es-sub" lang="es">Resuelve de forma interactiva la Actividad 1 (esquema de los componentes de la sangre) y la Actividad 2 (colorear las figuras del cómic) con evaluación de Nota 1,0 a 7,0 y Emojis.</p>
+          </div>
+          <div class="actions-right">
+            <button type="button" id="btn-blut-evaluate" class="btn-primary btn-lg">📝 Seite 1 &amp; 2 benoten (Note 1,0–7,0 🎁)</button>
+            <button type="button" id="btn-blut-reset" class="btn-secondary">🔄 Alles zurücksetzen</button>
+          </div>
+        </div>
+
+        <div id="blut-grade-banner" class="grade-certificate-card" hidden></div>
+
+        <div class="two-col-lab">
+          <!-- Aufgabe 1 (Seite 1): Schema der Bestandteile des Blutes -->
+          <article class="lab-card">
+            <div class="card-top-meta">
+              <span class="step-badge">Aufgabe 1 · Seite 1</span>
+              <span class="source-tag">Schema ergänzen (5 Felder)</span>
+            </div>
+            <h3>Ergänze das Schema der Bestandteile des Blutes!</h3>
+            <p class="es-sub" lang="es">💡 Tipp: Selecciona en cada casilla del esquema el componente correcto en alemán.</p>
+
+            <!-- Visuelles Baum-Schema wie auf Seite 1 -->
+            <div class="blood-tree-diagram">
+              <div class="tree-root-box">BLUT</div>
+              <div class="tree-connector-label">Besteht aus ↓</div>
+              <div class="tree-level-two">
+                <div class="tree-node-card node-plasma">
+                  <label for="sel-slot_plasma">1. Flüssiger Teil (links):</label>
+                  <select id="sel-slot_plasma" class="schema-select" data-slot-id="slot_plasma"></select>
+                  <small class="es-sub" lang="es">Parte líquida amarilla (transporta sustancias)</small>
+                  <div class="slot-feedback" id="fb-slot_plasma" hidden></div>
+                </div>
+
+                <div class="tree-node-card node-fest">
+                  <label for="sel-slot_fest">2. Zweiter Teil (rechts):</label>
+                  <select id="sel-slot_fest" class="schema-select" data-slot-id="slot_fest"></select>
+                  <small class="es-sub" lang="es">Parte sólida (células y plaquetas)</small>
+                  <div class="slot-feedback" id="fb-slot_fest" hidden></div>
+                </div>
+              </div>
+
+              <div class="tree-connector-label">Zum festen Teil gehören diese 3 Bestandteile ↓</div>
+
+              <div class="tree-level-three">
+                <div class="tree-node-card node-sub">
+                  <label for="sel-slot_plaettchen">3. Reparieren Gefäße (gerinnt):</label>
+                  <select id="sel-slot_plaettchen" class="schema-select" data-slot-id="slot_plaettchen"></select>
+                  <small class="es-sub" lang="es">Plaquetas (coagulación)</small>
+                  <div class="slot-feedback" id="fb-slot_plaettchen" hidden></div>
+                </div>
+
+                <div class="tree-node-card node-sub">
+                  <label for="sel-slot_weisse">4. Kämpfen gegen Viren &amp; Bakterien:</label>
+                  <select id="sel-slot_weisse" class="schema-select" data-slot-id="slot_weisse"></select>
+                  <small class="es-sub" lang="es">Glóbulos blancos (defensas)</small>
+                  <div class="slot-feedback" id="fb-slot_weisse" hidden></div>
+                </div>
+
+                <div class="tree-node-card node-sub">
+                  <label for="sel-slot_rote">5. Transportieren O₂ und CO₂:</label>
+                  <select id="sel-slot_rote" class="schema-select" data-slot-id="slot_rote"></select>
+                  <small class="es-sub" lang="es">Glóbulos rojos (oxígeno y CO₂)</small>
+                  <div class="slot-feedback" id="fb-slot_rote" hidden></div>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Aufgabe 2 (Seite 2): Die Bestandteile des Blutes als Comic-Figuren! -->
+          <article class="lab-card">
+            <div class="card-top-meta">
+              <span class="step-badge">Aufgabe 2 · Seite 2</span>
+              <span class="source-tag">Interaktives Ausmal-Bild (4 Farben)</span>
+            </div>
+            <h3>🎨 Die Bestandteile des Blutes als Comic-Figuren!</h3>
+            <p>Wähle unten einen Farb-Pinsel aus und klicke direkt auf die Figuren im Comic-Bild (oder nutze die Farb-Auswahl darunter):</p>
+            <p class="es-sub" lang="es">💡 Tipp: a) Rote Blutkörperchen = rot · b) „B“ der weißen Blutkörperchen = blau · c) Blutplättchen = braun · d) Blutplasma = gelb!</p>
+
+            <!-- Farb-Pinsel-Leiste -->
+            <div class="color-palette-bar" role="group" aria-label="Farbpinsel wählen">
+              <span>🖌️ Pinsel wählen:</span>
+              <button type="button" class="brush-btn active" data-brush="rot">🔴 Rot</button>
+              <button type="button" class="brush-btn" data-brush="blau">🔵 Blau</button>
+              <button type="button" class="brush-btn" data-brush="braun">🟤 Braun</button>
+              <button type="button" class="brush-btn" data-brush="gelb">🟡 Gelb</button>
+            </div>
+
+            <!-- Interaktives Comic-SVG (Seite 2) -->
+            <div class="comic-svg-wrapper" id="comic-svg-stage"></div>
+
+            <!-- 4 Aufgaben-Zeilen von Seite 2 -->
+            <div id="comic-controls-list" class="comic-tasks-stack"></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================================
+         TAB 3: DER BLUTKREISLAUF — SCHEMA BESCHRIFTEN (SEITE 3 & 4)
+    ==================================================================== -->
+    <section id="tab-kreislauf" class="tab-panel" role="tabpanel" aria-labelledby="tabbtn-kreislauf" hidden>
+      <div class="panel-inner">
+        <div class="section-intro-bar">
+          <div>
+            <h2>🫀 Der Blutkreislauf: Schema Nr. 1–5, Blutgefäße &amp; Gasaustausch (Seite 3 &amp; 4)</h2>
+            <p class="es-sub" lang="es">Practica el esquema exacto de la página 4 (números 1 al 5, las 6 etiquetas de vasos/corazón y las 4 frases del intercambio gaseoso) con nota de 1,0 a 7,0.</p>
+          </div>
+          <div class="actions-right">
+            <button type="button" id="btn-kr-evaluate" class="btn-primary btn-lg">📝 Kreislauf-Labor benoten (Note 1,0–7,0 🎁)</button>
+            <button type="button" id="btn-kr-reset" class="btn-secondary">🔄 Zurücksetzen</button>
+          </div>
+        </div>
+
+        <div id="kr-grade-banner" class="grade-certificate-card" hidden></div>
+
+        <div class="two-col-lab">
+          <!-- Linke Spalte: Großes SVG-Schema von Seite 4 + Nr. 1-5 -->
+          <article class="lab-card">
+            <div class="card-top-meta">
+              <span class="step-badge">Aufgabe 1 · Seite 4 (NK5 WP 32)</span>
+              <span class="source-tag">Nummern 1 bis 5 zuordnen</span>
+            </div>
+            <h3>1) Ordne den Nr. 1–5 die Begriffe zu!</h3>
+            <p>Begriffe: <strong>Herz · Ein-/Ausatmung · Lungenkreislauf · Lunge · Muskelzellen</strong></p>
+            <p class="es-sub" lang="es">💡 Tipp: Mira el dibujo del circuito doble tal como aparece en la página 4 de tu guía y asigna cada número del 1 al 5.</p>
+
+            <div id="kreislauf-page4-svg" class="svg-stage"></div>
+
+            <div id="kr-numbers-list" class="tasks-stack mt-sm"></div>
+          </article>
+
+          <!-- Rechte Spalte: Aufgabe 2a (Gefäße & Herzhälften) + Aufgabe 2b (4 Gasaustausch-Sätze) -->
+          <article class="lab-card">
+            <div class="card-top-meta">
+              <span class="step-badge">Aufgabe 2 · Seite 4</span>
+              <span class="source-tag">6 Gefäße/Herzhälften + 4 Gasaustausch-Sätze</span>
+            </div>
+            <h3>2a) Beschrifte die Blutgefäße und Herzhälften!</h3>
+            <p>Begriffe: <strong>Lungenarterie · Lungenvene · Körperarterie · Körpervene · rechte Herzhälfte · linke Herzhälfte</strong></p>
+            <p class="es-sub" lang="es">💡 Tipp: Recuerda que en el esquema la mitad derecha del corazón está a la izquierda (azul) y la mitad izquierda está a la derecha con un asterisco (*) en rojo.</p>
+
+            <div id="kr-labels-list" class="tasks-stack"></div>
+
+            <hr class="lab-divider">
+
+            <h3>2b) Wo passiert welcher Schritt beim Gasaustausch? (Lunge vs. Muskelzellen)</h3>
+            <p class="es-sub" lang="es">💡 Tipp: En el pulmón (Lunge) es la SANGRE («Das Blut...») la que toma O₂ y deja CO₂; en el músculo (Muskelzellen) es la CÉLULA («Die Zelle...») la que toma O₂ y deja CO₂.</p>
+
+            <div id="kr-gasaustausch-list" class="tasks-stack"></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================================
+         TAB 4: TABAK-LABOR (SEITE 10) & 5-FEHLER-DETEKTIV (SEITE 11)
+    ==================================================================== -->
+    <section id="tab-tabak" class="tab-panel" role="tabpanel" aria-labelledby="tabbtn-tabak" hidden>
+      <div class="panel-inner">
+        <div class="section-intro-bar">
+          <div>
+            <h2>🚭 Gasaustausch eines Rauchers (Seite 10) &amp; 5-Fehler-Detektiv (Seite 11)</h2>
+            <p class="es-sub" lang="es">Las dos últimas páginas prácticas de tu guía de la Deutsche Schule Santiago: el modelo de intercambio gaseoso del fumador (pág. 10) y corregir los 5 errores del libro (pág. 11).</p>
+          </div>
+          <div class="actions-right">
+            <button type="button" id="btn-tabak-evaluate" class="btn-primary btn-lg">📝 Seite 10 &amp; 11 benoten (Note 1,0–7,0 🎁)</button>
+            <button type="button" id="btn-tabak-reset" class="btn-secondary">🔄 Zurücksetzen</button>
+          </div>
+        </div>
+
+        <div id="tabak-grade-banner" class="grade-certificate-card" hidden></div>
+
+        <div class="two-col-lab">
+          <!-- Linke Spalte: Seite 10 — Gasaustausch eines Rauchers -->
+          <article class="lab-card">
+            <div class="card-top-meta">
+              <span class="step-badge">Seite 10 · Abteilung Vitacura</span>
+              <span class="source-tag">Gasaustausch und Tabakkonsum (/3 Punkte)</span>
+            </div>
+            <h3>🫁 Du sollst jetzt den Gasaustausch eines Rauchers darstellen!</h3>
+            <p>Klicke auf die 3 Schadstoff-Buttons, um <strong>Teer (braun)</strong>, <strong>Nikotin (lila)</strong> und <strong>Kohlenmonoxid (grau)</strong> im Schaubild von Seite 10 einzuzeichnen, und beantworte die 3 Fragen:</p>
+            <p class="es-sub" lang="es">💡 Tipp: Activa los 3 efectos en el dibujo interactivo para ver cómo se diferencia del intercambio gaseoso normal.</p>
+
+            <div class="smoker-toggles-bar" role="group" aria-label="Schadstoffe im Bild einzeichnen">
+              <button type="button" class="smoker-paint-btn active" data-paint="teer" aria-pressed="true">
+                🟤 1. Teer in Braun (Lungenbläschen)
+              </button>
+              <button type="button" class="smoker-paint-btn active" data-paint="nikotin" aria-pressed="true">
+                🟣 2. Nikotin in Lila (Blutgefäß eng)
+              </button>
+              <button type="button" class="smoker-paint-btn active" data-paint="co" aria-pressed="true">
+                ⚪ 3. Kohlenmonoxid in Grau (Weg zur Zelle)
+              </button>
+            </div>
+
+            <div id="smoker-gasaustausch-svg" class="svg-stage"></div>
+
+            <div id="smoker-questions-list" class="tasks-stack mt-sm"></div>
+          </article>
+
+          <!-- Rechte Spalte: Seite 11 — 5 Fehler im Schulbuch-Text finden & korrigieren -->
+          <article class="lab-card">
+            <div class="card-top-meta">
+              <span class="step-badge">Seite 11 · Fehlersuche</span>
+              <span class="source-tag">5 Fehler in 6 Sätzen finden &amp; korrigieren</span>
+            </div>
+            <h3>🕵️‍♀️ Der Autor hat 5 Fehler gemacht! Markiere &amp; korrigiere sie!</h3>
+            <p>Lies jeden der 6 Sätze von Seite 11 genau. <strong>Achtung:</strong> 5 Sätze haben einen Fehler und <strong>1 Satz (Satz 3!) ist richtig</strong>. Wähle für jeden Satz die richtige Korrektur auf Deutsch:</p>
+            <p class="es-sub" lang="es">💡 Tipp: Incluye el consejo de alemán para la oración 4 («schlechter / nicht richtig arbeiten» en vez de «schlimmer arbeiten»).</p>
+
+            <div id="five-errors-list" class="tasks-stack"></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================================
+         TAB 5: GROSSE PRÜFUNGS-ARENA (SPIEL-SHOW & PROBE-LISTE MIT NOTE 1–7)
+    ==================================================================== -->
+    <section id="tab-arena" class="tab-panel" role="tabpanel" aria-labelledby="tabbtn-arena" hidden>
+      <div class="panel-inner">
+        <!-- Hero Banner -->
+        <div class="arena-hero">
+          <div class="arena-hero-left">
+            <div class="arena-rank-row">
+              <span class="arena-rank-badge" id="arena-rank-badge">🐣 Rang 1: Blut-Entdeckerin</span>
+              <span class="arena-mode-pill">🇨🇱 Note 1,0 bis 7,0 + 🎁 Emoji-Geschenke</span>
+            </div>
+            <h2>🎮 Große Naturkunde-Prüfungs-Arena (5. Klasse · DS Santiago)</h2>
+            <p class="es-sub" lang="es">
+              64 preguntas de prueba en alemán + generador aleatorio sobre Das Blut, Der Blutkreislauf y Tabakkonsum, con pequeños subtítulos y tips en español abajo, cálculo de Nota de 1,0 a 7,0 y regalos de Emojis.
+            </p>
+          </div>
+
+          <div class="arena-hero-stats">
+            <div class="arena-stat-box stat-combo">
+              <span class="arena-stat-label">Combo 🔥</span>
+              <strong id="arena-combo-val">0x</strong>
+            </div>
+            <div class="arena-stat-box stat-stars">
+              <span class="arena-stat-label">Gemeistert 🏅</span>
+              <strong id="arena-stars-val">0 / 64</strong>
+            </div>
+            <div class="arena-stat-box stat-nota">
+              <span class="arena-stat-label">Aktuelle Note 🎁</span>
+              <strong id="arena-live-nota">—</strong>
+            </div>
+            <button type="button" id="btn-arena-sound" class="arena-sound-btn" aria-pressed="true">
+              🔊 Sound: AN
+            </button>
+          </div>
+        </div>
+
+        <!-- Steuerung: Spiel-Show vs. Prüfungs-Liste + Themenwelten -->
+        <div class="arena-controls-card">
+          <div class="arena-mode-row">
+            <div class="arena-view-switcher" role="group" aria-label="Darstellungsmodus wählen">
+              <button type="button" class="arena-mode-btn active" data-arena-view="arcade">
+                🕹️ Spiel-Show (1 Frage groß · Tasten 1–4)
+              </button>
+              <button type="button" class="arena-mode-btn" data-arena-view="list">
+                📋 Ganze Probe-Liste (Alle Karten + Zeugnis 1,0–7,0)
+              </button>
+            </div>
+
+            <div class="arena-action-buttons">
+              <button type="button" id="btn-arena-retry-errors" class="btn-warning" hidden>
+                🔁 Nur Fehler üben (<span id="arena-error-count">0</span>)
+              </button>
+              <button type="button" id="btn-arena-shuffle" class="btn-secondary">
+                🎲 Neu mischen / Neue Probe
+              </button>
+            </div>
+          </div>
+
+          <div class="arena-worlds-bar" id="arena-worlds-bar" role="group" aria-label="Themenwelten auswählen">
+            <button type="button" class="arena-world-pill active" data-world="exam20">
+              🎯 20er-Schulprobe (Mix aus allen Seiten)
+            </button>
+            <button type="button" class="arena-world-pill" data-world="all">
+              🌟 Alle 64 Fragen
+            </button>
+            <button type="button" class="arena-world-pill" data-world="blut">
+              🩸 1. Das Blut &amp; Comic (16)
+            </button>
+            <button type="button" class="arena-world-pill" data-world="kreislauf">
+              🫀 2. Herz &amp; Blutkreislauf (16)
+            </button>
+            <button type="button" class="arena-world-pill" data-world="tabak">
+              🚬 3. Tabak, Nikotin, Teer &amp; CO (16)
+            </button>
+            <button type="button" class="arena-world-pill" data-world="passiv_fehler">
+              🛡️ 4. Passivrauchen &amp; 5-Fehler (16)
+            </button>
+            <button type="button" class="arena-world-pill arena-world-random" data-world="random_mix">
+              🎲 5. Zufalls-Generator (Immer neu!)
+            </button>
+          </div>
+        </div>
+
+        <!-- SUB-ANSICHT 1: SPIEL-SHOW (ARCADE) -->
+        <div id="arena-view-arcade">
+          <div class="arena-progress-strip">
+            <div class="arena-progress-info">
+              <span id="arena-arcade-step-badge" class="step-badge">Frage 1 / 20</span>
+              <span id="arena-arcade-topic-badge" class="source-tag">Das Blut</span>
+            </div>
+            <div class="arena-progress-track" aria-hidden="true">
+              <div class="arena-progress-fill" id="arena-progress-fill" style="--progress-pct: 5%;"></div>
+            </div>
+            <span class="arena-score-mini" id="arena-arcade-live-score">✓ 0 richtig</span>
+          </div>
+
+          <div id="arena-arcade-certificate" class="grade-certificate-card" hidden></div>
+
+          <div class="arena-arcade-stage">
+            <div class="arena-figure-card">
+              <div id="arena-arcade-svg" class="svg-stage arena-svg-stage" aria-live="polite"></div>
+            </div>
+
+            <div class="arena-question-card">
+              <div id="arena-confetti-layer" class="confetti-layer" aria-hidden="true"></div>
+              <h3 id="arena-arcade-q-de" class="arena-q-title">Frage lädt...</h3>
+              <p id="arena-arcade-q-es" class="es-sub question-es-box" lang="es"></p>
+
+              <div id="arena-arcade-options" class="arena-options-grid"></div>
+
+              <!-- Kleiner Spanisch-Tipp unten -->
+              <div id="arena-arcade-tip-es" class="spanish-tip-banner es-sub" lang="es"></div>
+
+              <div id="arena-arcade-feedback" class="feedback-banner" hidden></div>
+
+              <div class="card-footer-nav arena-arcade-footer">
+                <button type="button" id="btn-arena-prev" class="btn-secondary">← Zurück</button>
+                <button type="button" id="btn-arena-grade-now" class="btn-gift-eval">📊 Note 1–7 &amp; Emoji-Geschenk zeigen 🎁</button>
+                <button type="button" id="btn-arena-next" class="btn-primary">Nächste Frage →</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SUB-ANSICHT 2: GANZE PROBE-LISTE -->
+        <div id="arena-view-list" hidden>
+          <div id="arena-list-certificate" class="grade-certificate-card" hidden></div>
+          <div id="arena-list-container" class="quiz-list"></div>
+          <div class="quiz-submit-bar">
+            <button type="button" id="btn-arena-evaluate-list" class="btn-primary btn-lg">
+              📝 Ganze Probe benoten: Note 1,0 bis 7,0 &amp; Geschenk-Emojis berechnen 🎁
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================================
+         TAB 6: GESCHENK-SCHATZKISTE & NOTEN-SKALA (1,0 BIS 7,0 MIT EMOJIS)
+    ==================================================================== -->
+    <section id="tab-geschenke" class="tab-panel" role="tabpanel" aria-labelledby="tabbtn-geschenke" hidden>
+      <div class="panel-inner">
+        <div class="section-intro-bar">
+          <div>
+            <h2>🎁 Deine Geschenk-Emojis &amp; Noten-Pass (Note 1,0 bis 7,0)</h2>
+            <p class="es-sub" lang="es">Cada vez que estudias, respondes bien o completas una prueba, ganas puntos y desbloqueas Emojis de regalo en tu cofre del tesoro.</p>
+          </div>
+          <div class="actions-right">
+            <button type="button" id="btn-unwrap-next-gift" class="btn-gift-eval">
+              🎁 Nächstes Überraschungs-Geschenk prüfen!
+            </button>
+          </div>
+        </div>
+
+        <!-- Übersicht der Chilenischen Noten-Skala (1,0 bis 7,0) mit Emoji-Bewertung -->
+        <article class="lab-card mb-md">
+          <h3>🇨🇱🇩🇪 Wie wird deine Note von 1,0 bis 7,0 mit Emojis bewertet? (60 % Skala)</h3>
+          <p class="es-sub" lang="es">Escala oficial chilena de 1,0 a 7,0 (al 60 % de exigencia para el 4,0) combinada con la nota alemana (1 a 6) y premios de Emojis.</p>
+          <div id="grade-scale-showcase" class="grade-scale-grid"></div>
+        </article>
+
+        <!-- Historial de notas de la sesión -->
+        <article class="lab-card mb-md">
+          <h3>📊 Deine erreichten Noten in dieser Sitzung</h3>
+          <p class="es-sub" lang="es">Historial de todas las pruebas y módulos que has evaluado hoy:</p>
+          <div id="session-grades-history" class="grades-history-list">
+            <p class="muted-note">Noch keine Probe ausgewertet — klicke in einem Modul auf „Benoten“, um deine erste Note (1,0–7,0) und dein Emoji-Geschenk zu erhalten!</p>
+          </div>
+        </article>
+
+        <!-- Sammel-Album: 16 Geschenk-Emojis -->
+        <article class="lab-card">
+          <div class="card-top-meta">
+            <span class="step-badge">Sammel-Album</span>
+            <span class="source-tag" id="gifts-progress-tag">1 von 16 Geschenken freigeschaltet</span>
+          </div>
+          <h3>🏆 Deine 16 Naturkunde-Geschenk-Emojis</h3>
+          <p class="es-sub" lang="es">Colecciona los 16 trofeos y emojis respondiendo preguntas y logrando buenas notas. ¡También puedes hacer clic en cualquier regalo desbloqueado para celebrarlo!</p>
+          <div id="gifts-collection-grid" class="gifts-grid"></div>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <!-- Nativer Modal-Dialog für Geschenk-Emojis & Noten-Feier (Modern Web Guidance `html` §4) -->
+  <dialog id="gift-celebration-dialog" class="gift-dialog" closedby="any" aria-labelledby="gift-dialog-title">
+    <form method="dialog" class="gift-dialog-form">
+      <div class="gift-dialog-emoji-burst" id="gift-dialog-emojis" aria-hidden="true">🎁👑🦄🌟</div>
+      <h2 id="gift-dialog-title">🎉 Neues Geschenk-Emoji für dich!</h2>
+      <p id="gift-dialog-desc-de" class="gift-dialog-de"></p>
+      <p id="gift-dialog-desc-es" class="es-sub gift-dialog-es" lang="es"></p>
+      <div id="gift-dialog-grade-box" class="gift-dialog-grade-pill" hidden></div>
+      <div class="gift-dialog-actions">
+        <button type="submit" value="close" class="btn-primary btn-lg">🙌 Juhu, danke! Weiterlernen →</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script src="naturkunde-data.js"></script>
+  <script src="app.js"></script>
+  <script>
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", () => {
+        navigator.serviceWorker.register("./sw.js").catch(() => {});
+      });
+    }
+  </script>
+</body>
+</html>
