@@ -1,11 +1,26 @@
-const CACHE_NAME = "naturkunde-5klasse-v1";
+const CACHE_NAME = "naturkunde-5klasse-v2";
 const ASSETS = [
   "./",
   "./index.html",
   "./styles.css",
   "./naturkunde-data.js",
   "./app.js",
-  "./manifest.json"
+  "./manifest.json",
+  "./img/heart_realistic.jpg",
+  "./img/blood_components_realistic.jpg",
+  "./img/alveoli_gas_exchange_realistic.jpg",
+  "./img/smoking_damage_realistic.jpg",
+  "./img/heft_knochenmark.jpg",
+  "./img/heft_blutgefaess_cells.jpg",
+  "./img/heft_comic_figuren.jpg",
+  "./img/heft_gefaesse_tabelle.jpg",
+  "./img/heft_koerper_kreislauf.jpg",
+  "./img/heft_schema_seite4.jpg",
+  "./img/heft_tabak_alltag.jpg",
+  "./img/heft_no_adelantar_nikotin.jpg",
+  "./img/heft_passivrauchen_kind.jpg",
+  "./img/heft_gasaustausch_normal.jpg",
+  "./img/heft_gasaustausch_raucher.jpg"
 ];
 
 self.addEventListener("install", (event) => {
